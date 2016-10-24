@@ -11,20 +11,20 @@ def extractTag(name):
     temp = cv2.dilate(temp, square, iterations=4)
     temp = cv2.erode(temp, square, iterations=4)
     temp = cv2.dilate(temp, square, iterations=3)
-    cv2.imshow('123', temp)
     square = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 6))
     temp = cv2.erode(temp, square, iterations=1)
     temp = cv2.dilate(temp, square, iterations=3)
+    # cv2.imshow('123', temp)
     contours, heirs = cv2.findContours(temp, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     for tours in contours:
         rc = cv2.boundingRect(tours)
-        if rc[2] / rc[3] >= 2:
-            if 270 < rc[2] < 290:
+        if rc[2] / rc[3] >= 2 | rc[2] / rc[3] <= 4:
+            if 50 < rc[3] < 100:
                 cv2.rectangle(img, (rc[0], rc[1]), (rc[0] + rc[2], rc[1] + rc[3]), (255, 0, 255))
                 ball = img[rc[1]:(rc[1] + rc[3]), rc[0]:(rc[0] + rc[2])]
                 cv2.imwrite('tag'+ name, ball)
 
-    cv2.imshow('123', img)
+    # cv2.imshow('123', img)
     return
 
 def grayImg(name):
@@ -47,5 +47,5 @@ for i in range(256):
 extractTag('truecar.jpg')
 grayImg('truecar.jpg')
 #
-# cv2.waitKey(0)
-# cv2.destroyAllWindows()
+cv2.waitKey(0)
+cv2.destroyAllWindows()
