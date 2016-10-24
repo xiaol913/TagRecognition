@@ -12,7 +12,7 @@ for i in range(256):
     else:
         table.append(1)
 
-# rep = {'O': '0', 'I': '1', 'L': '1', 'Z': '2', 'S': '8'}
+rep = {'O': '0', 'I': '1', 'L': '1', 'Z': '2', 'S': '8'}
 
 def gettag(name):
     im = Image.open(name)
@@ -22,10 +22,10 @@ def gettag(name):
     text = image_to_string(out)
     text = text.strip()
     text = text.upper()
-    # for r in rep:
-    #     text = text.replace(r, rep[r])
+    for r in rep:
+        text = text.replace(r, rep[r])
 
     print text
     return text
 
-gettag('newtag.jpg')
+gettag('brgtruecar.jpg')
