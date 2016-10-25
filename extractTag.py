@@ -11,16 +11,13 @@ def extractTag(name):
     dst = cv2.convertScaleAbs(x, 0, 0.00390625)
     ret, temp = cv2.threshold(dst, 0, 255, cv2.THRESH_OTSU)
     square = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 1))
-    # cv2.imshow('1', temp)
     temp = cv2.dilate(temp, square, iterations=4)
     temp = cv2.erode(temp, square, iterations=4)
     temp = cv2.dilate(temp, square, iterations=3)
     square = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 3))
     temp = cv2.erode(temp, square, iterations=1)
     temp = cv2.dilate(temp, square, iterations=3)
-    # cv2.imshow('2', temp)
     contours, heirs = cv2.findContours(temp, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    # cv2.imshow('3', temp)
     for tours in contours:
         rc = cv2.boundingRect(tours)
         if rc[2] / rc[3] >= 2:
@@ -30,15 +27,14 @@ def extractTag(name):
                 name = 'tag_' + name
                 cv2.imwrite(name, ball)
 
-    # cv2.imshow('1234', img)
     grayTag(name)
     return
 
 
 def grayTag(name):
     img = Image.open(name)
-    imgry = img.convert('L')
-    out = imgry.point(table, '1')
+    img = img.convert('L')
+    out = img.point(table, '1')
     os.remove(name)
     out.save(name)
     RemoveBorder(name)
@@ -67,3 +63,4 @@ for i in range(256):
 
 if __name__ == "__main__":
     extractTag(sys.argv[1])
+

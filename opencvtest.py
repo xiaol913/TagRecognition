@@ -56,6 +56,6 @@ for tours in contours:
         cv2.imwrite('332211.jpg', ball)
 
 
-# cv2.imshow('origin', img)
-# cv2.waitKey(0)
-# cv2.destroyAllWindows()
+cv2.imshow('origin', img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
