@@ -1,7 +1,7 @@
 from PIL import Image
 import pytesseract
 
-im = Image.open('brgtruecar.jpg')
+im = Image.open('#_tag_truecar.jpg')
 
 imgry = im.convert('L')
 

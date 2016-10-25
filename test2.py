@@ -12,7 +12,7 @@ for i in range(256):
     else:
         table.append(1)
 
-rep = {'O': '0', 'I': '1', 'L': '1', 'Z': '2', 'S': '8'}
+rep = {'D': '0', 'I': '1', 'Z': '2', 'S': '8'}
 
 def gettag(name):
     im = Image.open(name)
@@ -28,4 +28,4 @@ def gettag(name):
     print text
     return text
 
-gettag('brgtruecar.jpg')
+gettag('#_tag_truecar.jpg')
