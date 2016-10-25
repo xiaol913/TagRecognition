@@ -7,6 +7,7 @@ import re
 
 def extractTag(name):
     img = cv2.imread(name, 0)
+    h,w = img.shape[:2]
     x = cv2.Sobel(img, cv2.CV_16S, 2, 0)
     dst = cv2.convertScaleAbs(x, 0, 0.00390625)
     ret, temp = cv2.threshold(dst, 0, 255, cv2.THRESH_OTSU)
@@ -17,17 +18,21 @@ def extractTag(name):
     square = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 3))
     temp = cv2.erode(temp, square, iterations=1)
     temp = cv2.dilate(temp, square, iterations=3)
+    # cv2.imshow('123', temp)
     contours, heirs = cv2.findContours(temp, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     for tours in contours:
         rc = cv2.boundingRect(tours)
-        if rc[2] / rc[3] >= 2:
-            if 50 < rc[3]:
+        if rc[2] / rc[3] >= 2 and rc[3] > 50:
+            if rc[1] > 0.3 * h and rc[0] > 0.3 * w:
                 cv2.rectangle(img, (rc[0], rc[1]), (rc[0] + rc[2], rc[1] + rc[3]), (255, 0, 255))
                 ball = img[rc[1]:(rc[1] + rc[3]), rc[0]:(rc[0] + rc[2])]
                 name = '_' + name
+                # cv2.imshow('ball', ball)
                 cv2.imwrite('./temp/' + name, ball)
+                # print rc[2], rc[3], rc[0], rc[1]
 
     grayTag(name)
+    # cv2.imshow('img', img)
 
 
 def grayTag(name):
@@ -42,10 +47,11 @@ def grayTag(name):
 def RemoveBorder(name):
     img = cv2.imread('./temp/' + name, 0)
     h, w = img.shape[:2]
-    tagROI = img[15:h - 15, 10:w - 10]
+    # print h, w
+    tagROI = img[18:h - 18, 10:w - 10]
     mask = np.zeros((h, w), np.uint8)
     mask = cv2.bitwise_not(mask)
-    mask[15:h - 15, 10:w - 10] = tagROI
+    mask[18:h - 18, 10:w - 10] = tagROI
     os.remove('./temp/' + name)
     name = '#of' + name
     cv2.imwrite('./temp/' + name, mask)
@@ -89,6 +95,9 @@ for i in range(256):
     else:
         table.append(1)
 
+# extractTag('456.jpg')
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
 if __name__ == "__main__":
     extractTag(sys.argv[1])
 
