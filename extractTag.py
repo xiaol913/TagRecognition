@@ -48,10 +48,10 @@ def RemoveBorder(name):
     img = cv2.imread('./temp/' + name, 0)
     h, w = img.shape[:2]
     # print h, w
-    tagROI = img[18:h - 18, 10:w - 10]
+    tagROI = img[17:h - 17, 10:w - 10]
     mask = np.zeros((h, w), np.uint8)
     mask = cv2.bitwise_not(mask)
-    mask[18:h - 18, 10:w - 10] = tagROI
+    mask[17:h - 17, 10:w - 10] = tagROI
     os.remove('./temp/' + name)
     name = '#of' + name
     cv2.imwrite('./temp/' + name, mask)
