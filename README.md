@@ -6,10 +6,10 @@ Need install Opencv3, Python2.7, and Tesseract-OCR. And Python need include PIL 
 
 Example:
 
-MAC:
+MAC Terminal:
 
 TagRecognition$ python extractTag.py 123.jpg
 
-WINDOWS:
+WINDOWS CMD:
 
 X:/.../TagRecognition/>python extractTag.py 123.jpg
